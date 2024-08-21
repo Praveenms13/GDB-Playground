@@ -1,6 +1,9 @@
 #include <stdio.h>
 int k = 30;
-
+static int praveen1 = 10;
+static int praveen2;
+int praveen3 = 20;
+int praveen4;
 int foo(){
     static int q = 200;
     printf("[*] Address of q: %p\n", &q);
@@ -8,6 +11,10 @@ int foo(){
 }
 
 int main() {
+    static int praveen10 = 10;
+    static int praveen20;
+    int praveen30 = 20;
+    int praveen40;
     static int j = 20;
     static int l = 50;
     printf("[*] Address of k: %p\n", &k);
