@@ -65,6 +65,8 @@ void pair__()
 }
 void vector__()
 {
+    // insert in vector is costliest, high resource sucker
+    // insert in vector is costliest
     vector<int> v;
     cout << "Size of Vector v: " << v.size() << endl;
     v.emplace_back(10);
@@ -253,12 +255,260 @@ void vector__()
         cout << *(testeraseloop) << " ";
     }
     test2.clear(); // erase all the elements in the vector
-    cout<<endl<<"After test1.empty(): "<<test1.empty();
+    cout << endl
+         << "After test1.empty(): " << test1.empty() << endl;
     cout << endl;
+}
+void list__()
+{
+    list<int> p;
+    p.emplace_back(10);
+    p.push_front(20);
+
+    // rest all are same like in vector
+}
+void deque__()
+{
+    deque<int> p;
+    p.push_back(10);
+    p.push_front(20);
+    p.emplace_back(30);
+
+    p.pop_back();
+    p.pop_front();
+    p.back();
+    p.front();
+}
+void stack__()
+{
+    stack<int> st;
+    st.push(10);
+    st.emplace(20);
+
+    cout << "Top Element: " << st.top() << endl;
+    st.pop();
+    cout << "Top Element after pop: " << st.top() << endl;
+    cout << "Size: " << st.size() << endl;
+    cout << st.empty() << endl; // to check if it is empty
+
+    stack<int> p2;
+    p2.swap(st);
+    cout << "Top element of swap: " << p2.top();
+    cout << endl;
+}
+void queue__()
+{
+    queue<int> qu;
+    qu.push(10);
+    qu.push(20);
+    qu.emplace(30);
+    cout << qu.back() << endl;
+
+    qu.back() += 9;             // 30 + 9
+    cout << qu.back() << endl;  // 39
+    cout << qu.front() << endl; // 10
+    qu.pop();
+    cout << qu.front() << endl; // 20
+}
+void disp_prio_que(priority_queue<int> pq)
+{
+    cout << endl
+         << "Inside loop" << endl;
+    while (!pq.empty())
+    {
+        cout << pq.top() << " ";
+        pq.pop();
+    }
+    cout << endl;
+}
+void priority_queue__()
+{
+    /**
+     * push => log(n)
+     * top => o(1)
+     * pop => log(n)
+     */
+    priority_queue<int> pq; // max_heap
+    pq.push(10);
+    pq.push(30);
+    pq.push(12);
+    pq.push(11);
+    cout << pq.top() << endl;
+    // while (! pq.empty()){
+    //     cout<< pq.top()<<" ";
+    //     pq.pop();
+    // }
+    // to display all the elements without popping
+    disp_prio_que(pq);
+    cout << pq.top() << endl;
+
+    // to store the elements in ascending order, minimum heap, minimum priority queu
+    priority_queue<int, vector<int>, greater<int>> pq2; // min heap
+    pq2.push(30);
+    pq2.push(28);
+    pq2.emplace(31);
+    cout << pq2.top();
+    cout << endl;
+}
+void set__()
+{
+    set<int> st; // sorted and unique
+    cout << "In set" << endl;
+    st.emplace(10);
+    st.insert(20);
+    st.insert(12);
+    st.insert(10);
+    st.insert(32);
+    st.insert(30);
+    // {10, 12, 20, 30, 32}
+    // begin(), end(), rbegin(), rend(), size(), empty(), swap() are as follows
+    auto it = st.find(12); // Points to the iterator => address
+    cout << "Value of it: " << *(it) << ", Address of it: " << &(it) << endl
+         << st.count(10) << endl; // if the set exists shows 1(occurance) as it is unique else 0
+    auto it2 = st.find(100);      // Points to the st.end(), to the last element + 1st address
+    cout << "Value of it: " << *(it2) << ", Address of it2: " << &(it2) << endl;
+    st.erase(20);
+
+    // {1,2,3,4,5}
+    auto iter1 = st.find(2);
+    auto iter2 = st.find(4);
+    st.erase(iter1, iter2); // after erase {1, 4, 5}
+
+    set <int> st2;
+    st2.emplace(10);
+    st2.insert(18);
+    st2.insert(12);
+    st2.insert(10);
+    st2.insert(32);
+    st2.insert(30);
+    // {10, 12, 18, 30, 32}
+    for (int element:st2){
+        cout<<element<<" ";
+    }
+    cout<<endl;
+    auto itub1 = st2.upper_bound(20); // next of 20 is 30 so 30 is displayed
+    auto itlb2 = st2.lower_bound(20); // points to same index as this is lowerbound
+    cout<<"Upper Bound of itub1: "<<*(itub1)<<endl; // 30
+    cout<<"Upper Bound of itub1 {N/A}: "<<*(st2.upper_bound(11))<<endl; // 12 
+    cout<<"Upper Bound of itub1 {out of range}: "<<*(st2.upper_bound(50))<<endl; // undefined behaviour => 4
+    
+    cout<<"Lower Bound of itlb2: "<<*(st2.lower_bound(18))<<endl;
+    cout<<"Lower Bound of itlb2 {N/A}: "<<*(st2.lower_bound(11))<<endl; // 12 
+    cout<<"Lower Bound of itlb2 {out of range}: "<<*(st2.lower_bound(50))<<endl; // undefined behaviour => 4
+}
+void binSearch()
+{
+    // bound gives the index as the result 
+    int n = 5;
+    int a[] = {44, 21, 33, 3, 49};
+    sort(a, a + n); // bin search can be done only in sorted arrays
+    // {3, 21, 33, 44, 49}
+    bool res = binary_search(a, a + n, 44);
+    cout << "Binary Search 1: " << res << endl;
+    cout << "Binary Search 2: " << binary_search(a, a + n, 5) << endl;
+    cout << endl
+         << "Upper and Lower works in log(n)" << endl;
+    cout << "Lower Bound" << endl
+         << "---------------------" << endl;
+    int ind1 = lower_bound(a, a + n, 44) - a;
+    int ind2 = lower_bound(a, a + n, 22) - a; // if the element is not present, then it points to immidiate next element 44
+    int ind3 = lower_bound(a, a + n, 50) - a; // Points to last element + 1 str.end()
+
+    // also can be written as this if it is an vector
+    // int ind4 = lower_bound(a.begin(), a.end()) - a.begin();
+    // cout<<a; // 0x7ffd62bc1cf0
+    cout << &ind1 << ":" << ind1 << ":Val:" << a[ind1] << endl;
+    cout << &ind2 << ":" << ind2 << ":Val:" << a[ind2] << endl;
+    cout << &ind3 << ":" << ind3 << ":Val:" << a[ind3] << endl
+         << endl;
+
+    cout << "Lower Bound" << endl
+         << "---------------------" << endl;
+    /**
+     * Upper bound returns the iterator to the next element
+     */
+    int up1 = upper_bound(a, a + n, 44) - a; // points to that element's index + 1
+    int up2 = upper_bound(a, a + n, 22) - a; // if the element is not present, then it points to immidiate next element 44
+    int up3 = upper_bound(a, a + n, 50) - a; // Points to last element + 1 str.end()
+
+    // also can be written as this if it is an vector
+    // int ind4 = upper_bound(a.begin(), a.end()) - a.begin();
+    // cout<<a; // 0x7ffd62bc1cf0
+    cout << &up1 << ":" << up1 << ":Val:" << a[up1] << endl;
+    cout << &up2 << ":" << up2 << ":Val:" << a[up2] << endl;
+    cout << &up3 << ":" << up3 << ":Val:" << a[up3] << endl;
+    // --------------------------------------------------------------------
+    /**
+     * sample problem 1
+     * find the first occurence of x in a sorted array, if not exists return -1
+     * a[] = {1, 4, 4, 4, 4, 9, 9, 10, 11}
+     */
+    int b[] = {1, 4, 4, 4, 4, 9, 9, 10, 11};
+    cout<<"Value of x for lowerbound to find the first occurance ? ";
+    int x;
+    cin>>x;
+    int result = lower_bound(b, b + sizeof(b)/sizeof(b[0]), x) - b; // lower bound excepts iterators or pointers as its first two arguements 
+    if (result != sizeof(b)/sizeof(b[0]) && b[result] == x) cout<<"Found: "<<result; // first checking the index is exists else will face runtime error
+    else cout<< -1;
+    cout<<endl;
+    // --------------------------------------------------------------------
+     /**
+     * sample problem 2
+     * find the last occurence of x in a sorted array, if not exists return -1
+     * a[] = {1, 4, 4, 4, 4, 9, 9, 10, 11}
+     */
+    // IMPORTANT => Uppper bound always points to the first element that is greater than 4 if input r is 4
+    int v[] = {1, 4, 4, 4, 4, 9, 9, 10, 11};
+    cout<<"Value of x for upperbound to find the last occurance ? ";
+    int r;
+    cin>>r;
+    int result1 = upper_bound(v, v + sizeof(v)/sizeof(v[0]), r) - v; // lower bound excepts iterators or pointers as its first two arguements 
+    result1--;
+    // cout<<result1<<endl<<endl;
+    if (result1 >= 0 && v[result1]== x) cout<<"Found: "<<result1;
+    else cout<< -1;
+    cout<<endl;
+    // --------------------------------------------------------------------
+    /**
+     * sample problem 3
+     * find the largest element smaller than x 
+     */
+    int p3[] = {1, 4, 4, 4, 4, 9, 9, 10, 11};
+    int c;
+    cout<<"value of c: ";
+    cin>>c;
+    int p3result = lower_bound(p3, p3 + sizeof(p3)/sizeof(p3[0]), c) - p3;
+    p3result--;
+    if (p3result >= 0) cout<<p3[p3result];
+    else cout << -1;
+    cout<<endl;
+    // --------------------------------------------------------------------
+    /**
+     * sample problem 4
+     * find the smallest element larger than x
+     */
+    int p4[] = {1, 4, 4, 4, 4, 9, 9, 10, 11};
+    int f;
+    cout<<"value of f: ";
+    cin>>f;
+    int p4result = upper_bound(p4, p4 + sizeof(p4)/sizeof(p4[0]), f) - p4;
+    // cout<<p4result<<endl<<sizeof(p4)/sizeof(p4[0])<<endl;
+    if (p4result < (sizeof(p4)/sizeof(p4[0]))) cout<<p4[p4result];
+    else cout<< -1;
+    cout<<endl;
+
 }
 int main()
 {
     // pair__();
-    vector__();
+    // vector__(); // for a vector singly linked list is maintained
+    // push front is very very cheap in list, in terms of complexity
+    // list__(); // in list internal operations are doubly linked list, like doubly linked list is maintained for a list
+    // deque__() // exactly similar to vector with the push_front additionally with pop_back and front
+    // stack__(); // FILO, all operations are in big o (n), all happens in constant time
+    // queue__(); // FIFO, SImilar to Stack, size, swap, empty same as stack, big o (n) all happens in constant time
+    // priority_queue__(); // inside tree ds is maintained , t is a heap based one, no direct way to access other elements, top elements can be accessed easily, size, swap and empty are same
+    set__(); // sorted and unique order !!, tree ds is used
+    // binSearch();
     return 0;
 }
