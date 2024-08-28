@@ -353,6 +353,7 @@ void priority_queue__()
 void set__()
 {
     set<int> st; // sorted and unique
+    // here everything like erase, insert happens in (logn)
     cout << "In set" << endl;
     st.emplace(10);
     st.insert(20);
@@ -374,7 +375,7 @@ void set__()
     auto iter2 = st.find(4);
     st.erase(iter1, iter2); // after erase {1, 4, 5}
 
-    set <int> st2;
+    set<int> st2;
     st2.emplace(10);
     st2.insert(18);
     st2.insert(12);
@@ -382,23 +383,24 @@ void set__()
     st2.insert(32);
     st2.insert(30);
     // {10, 12, 18, 30, 32}
-    for (int element:st2){
-        cout<<element<<" ";
+    for (int element : st2)
+    {
+        cout << element << " ";
     }
-    cout<<endl;
-    auto itub1 = st2.upper_bound(20); // next of 20 is 30 so 30 is displayed
-    auto itlb2 = st2.lower_bound(20); // points to same index as this is lowerbound
-    cout<<"Upper Bound of itub1: "<<*(itub1)<<endl; // 30
-    cout<<"Upper Bound of itub1 {N/A}: "<<*(st2.upper_bound(11))<<endl; // 12 
-    cout<<"Upper Bound of itub1 {out of range}: "<<*(st2.upper_bound(50))<<endl; // undefined behaviour => 4
-    
-    cout<<"Lower Bound of itlb2: "<<*(st2.lower_bound(18))<<endl;
-    cout<<"Lower Bound of itlb2 {N/A}: "<<*(st2.lower_bound(11))<<endl; // 12 
-    cout<<"Lower Bound of itlb2 {out of range}: "<<*(st2.lower_bound(50))<<endl; // undefined behaviour => 4
+    cout << endl;
+    auto itub1 = st2.upper_bound(20);                                                  // next of 20 is 30 so 30 is displayed
+    auto itlb2 = st2.lower_bound(20);                                                  // points to same index as this is lowerbound
+    cout << "Upper Bound of itub1: " << *(itub1) << endl;                              // 30
+    cout << "Upper Bound of itub1 {N/A}: " << *(st2.upper_bound(11)) << endl;          // 12
+    cout << "Upper Bound of itub1 {out of range}: " << *(st2.upper_bound(50)) << endl; // undefined behaviour => 4
+
+    cout << "Lower Bound of itlb2: " << *(st2.lower_bound(18)) << endl;
+    cout << "Lower Bound of itlb2 {N/A}: " << *(st2.lower_bound(11)) << endl;          // 12
+    cout << "Lower Bound of itlb2 {out of range}: " << *(st2.lower_bound(50)) << endl; // undefined behaviour => 4
 }
 void binSearch()
 {
-    // bound gives the index as the result 
+    // bound gives the index as the result
     int n = 5;
     int a[] = {44, 21, 33, 3, 49};
     sort(a, a + n); // bin search can be done only in sorted arrays
@@ -444,44 +446,50 @@ void binSearch()
      * a[] = {1, 4, 4, 4, 4, 9, 9, 10, 11}
      */
     int b[] = {1, 4, 4, 4, 4, 9, 9, 10, 11};
-    cout<<"Value of x for lowerbound to find the first occurance ? ";
+    cout << "Value of x for lowerbound to find the first occurance ? ";
     int x;
-    cin>>x;
-    int result = lower_bound(b, b + sizeof(b)/sizeof(b[0]), x) - b; // lower bound excepts iterators or pointers as its first two arguements 
-    if (result != sizeof(b)/sizeof(b[0]) && b[result] == x) cout<<"Found: "<<result; // first checking the index is exists else will face runtime error
-    else cout<< -1;
-    cout<<endl;
+    cin >> x;
+    int result = lower_bound(b, b + sizeof(b) / sizeof(b[0]), x) - b; // lower bound excepts iterators or pointers as its first two arguements
+    if (result != sizeof(b) / sizeof(b[0]) && b[result] == x)
+        cout << "Found: " << result; // first checking the index is exists else will face runtime error
+    else
+        cout << -1;
+    cout << endl;
     // --------------------------------------------------------------------
-     /**
+    /**
      * sample problem 2
      * find the last occurence of x in a sorted array, if not exists return -1
      * a[] = {1, 4, 4, 4, 4, 9, 9, 10, 11}
      */
     // IMPORTANT => Uppper bound always points to the first element that is greater than 4 if input r is 4
     int v[] = {1, 4, 4, 4, 4, 9, 9, 10, 11};
-    cout<<"Value of x for upperbound to find the last occurance ? ";
+    cout << "Value of x for upperbound to find the last occurance ? ";
     int r;
-    cin>>r;
-    int result1 = upper_bound(v, v + sizeof(v)/sizeof(v[0]), r) - v; // lower bound excepts iterators or pointers as its first two arguements 
+    cin >> r;
+    int result1 = upper_bound(v, v + sizeof(v) / sizeof(v[0]), r) - v; // lower bound excepts iterators or pointers as its first two arguements
     result1--;
     // cout<<result1<<endl<<endl;
-    if (result1 >= 0 && v[result1]== x) cout<<"Found: "<<result1;
-    else cout<< -1;
-    cout<<endl;
+    if (result1 >= 0 && v[result1] == x)
+        cout << "Found: " << result1;
+    else
+        cout << -1;
+    cout << endl;
     // --------------------------------------------------------------------
     /**
      * sample problem 3
-     * find the largest element smaller than x 
+     * find the largest element smaller than x
      */
     int p3[] = {1, 4, 4, 4, 4, 9, 9, 10, 11};
     int c;
-    cout<<"value of c: ";
-    cin>>c;
-    int p3result = lower_bound(p3, p3 + sizeof(p3)/sizeof(p3[0]), c) - p3;
+    cout << "value of c: ";
+    cin >> c;
+    int p3result = lower_bound(p3, p3 + sizeof(p3) / sizeof(p3[0]), c) - p3;
     p3result--;
-    if (p3result >= 0) cout<<p3[p3result];
-    else cout << -1;
-    cout<<endl;
+    if (p3result >= 0)
+        cout << p3[p3result];
+    else
+        cout << -1;
+    cout << endl;
     // --------------------------------------------------------------------
     /**
      * sample problem 4
@@ -489,15 +497,245 @@ void binSearch()
      */
     int p4[] = {1, 4, 4, 4, 4, 9, 9, 10, 11};
     int f;
-    cout<<"value of f: ";
-    cin>>f;
-    int p4result = upper_bound(p4, p4 + sizeof(p4)/sizeof(p4[0]), f) - p4;
+    cout << "value of f: ";
+    cin >> f;
+    int p4result = upper_bound(p4, p4 + sizeof(p4) / sizeof(p4[0]), f) - p4;
     // cout<<p4result<<endl<<sizeof(p4)/sizeof(p4[0])<<endl;
-    if (p4result < (sizeof(p4)/sizeof(p4[0]))) cout<<p4[p4result];
-    else cout<< -1;
-    cout<<endl;
-
+    if (p4result < (sizeof(p4) / sizeof(p4[0])))
+        cout << p4[p4result];
+    else
+        cout << -1;
+    cout << endl;
 }
+void multiset__()
+{
+    multiset<int> ms1;
+    ms1.insert(89);
+    ms1.insert(20);
+    ms1.insert(23);
+    ms1.insert(91);
+    ms1.insert(45);
+    ms1.insert(45);
+    ms1.insert(54);
+    ms1.insert(45);
+    // {20 23 45 45 45 54 89 91}
+    for (const auto &elements : ms1)
+    {
+        cout << elements << " ";
+    }
+    cout << endl
+         << endl;
+    // ms1.erase(45); // all 45 will get erased !!
+    ms1.erase(ms1.find(45)); // only erases the first occurence
+    // ms1.erase(ms1.find(20), ms1.find(20)+3); // this is not working !! see below
+    cout << endl;
+    for (const auto &elements : ms1)
+    {
+        cout << elements << " ";
+    }
+    cout << endl;
+    auto itms1 = ms1.find(20); // returns a pointer address
+    auto itms2 = ms1.find(45); // returns a pointer address
+    ms1.erase(itms1, itms2);   // 1. to delete the elements upto particular number
+    cout << endl
+         << "After deleting from itms1 to itms2" << endl;
+    for (const auto &elements : ms1)
+    {
+        cout << elements << " ";
+    }
+    cout << endl;
+    if (itms1 != ms1.end())
+    {
+        // before => 45 45 54 89 91
+        ms1.erase(ms1.find(45), next(ms1.find(45), 3)); // 2. to delete the next 3 elements
+        // After => 89 91
+    }
+    cout << endl;
+    for (int elements : ms1)
+    {
+        cout << elements << ", ";
+    }
+    cout << endl;
+    cout << *(ms1.find(54)) << " " << "Inserting 45 two times !!" << endl;
+    ms1.insert(45);
+    ms1.insert(45);
+    for (int elements : ms1)
+    {
+        cout << elements << " ";
+    }
+    cout << endl;
+    cout << &*ms1.find(45) << " => " << *(ms1.find(45)) << " " << *((&*ms1.find(45))) << endl;
+    cout << "45 Count: " << ms1.count(45) << endl;
+    cout << endl;
+}
+void unorderedset__()
+{
+    unordered_set<int> us1; // it has randomized order, tine complexity most of the time is o(1) once in a blue moon it goes to o(n) (worst case !!)
+    // all operations are similar to set, but lower bounds and upper bounds will not work here !!
+}
+void map__()
+{
+    // stores in sorted order with keys
+    map<int, int> mp1; // keys, value unique => keys are unique !! // something similar to set
+    // 3 ways to store the elements
+    mp1[1] = 10;
+    mp1.insert({2, 20});
+    mp1.emplace(3, 30);
+    cout << "mp1[1]: " << mp1[1] << endl;
+    map<pair<int, int>, int> mp2;
+    mp2[{2, 3}] = 10; // stores like {{2,3}, 10}
+    mp2.insert({{3, 4}, 20});
+
+    map<int, pair<int, int>> mp3;
+    mp3[{1}] = {100, 200};
+    mp3.insert({2, {200, 300}});
+
+    for (const auto &it : mp1)
+    {
+        cout << it.first << " " << it.second << endl;
+    }
+
+    for (const auto &it2 : mp2)
+    {
+        cout << "{" << it2.first.first << " " << it2.first.second << "}" << " " << it2.second << endl;
+    }
+
+    for (const auto &it3 : mp3)
+    {
+        cout << it3.first << " " << "{" << it3.second.first << " " << it3.second.second << "}" << endl;
+    }
+    cout << endl;
+    auto its = mp1.find(1);
+    cout << endl
+         << "first:" << its->first;
+    cout << endl
+         << "second:" << its->second << endl;
+
+    auto its2 = mp2.find({2, 3});
+    cout << endl
+         << "first.first:" << its2->first.first;
+    cout << endl
+         << "first.second:" << its2->first.second;
+    cout << endl
+         << "second:" << its2->second << endl;
+
+    // lower_bound, Upper_bound, erase, size, swap, empty are same as above
+}
+void multimap__()
+{
+    // similar to set and multiset
+    // similar to map, only thing is you can store duplicate keys, but everything is sorted
+}
+void unorderedmap__()
+{
+    // similar to map, only thing is you can store unique keys, but everything is randomized not sorted
+}
+int factorialf(int n)
+{
+    if (n < 0)
+    {
+        return -1;
+    }
+    int result = 1, i;
+    for (i = 1; i <= n; i++)
+    {
+        result *= i;
+    }
+    return result;
+}
+int strlenp(string str)
+{
+    int i = 0, count = 0;
+    for (i = 0; str[i] != '\0'; i++)
+    {
+        count++;
+    }
+    return count;
+}
+int permutationf(string str)
+{
+    // formula to find the permutation without functions
+    // totalcharcount! / repeatcharcount!
+    int arr[26] = {0};
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        int index = (int)str[i] - 97; // a = 97, 97 - 97 => 0th index
+        arr[index]++;
+    }
+    int totalcharcountfact = factorialf(strlenp(str));
+    int ans = totalcharcountfact;
+    for (int i = 0; i < 26; i++)
+    {
+        if (arr[i] > 1)
+            ans = ans / factorialf(arr[i]);
+    }
+    return ans;
+}
+bool comp(pair<int, int> p1, pair<int, int> p2)
+{
+    if (p1.second < p2.second)
+        return true;
+    if (p1.second > p2.second)
+        return false;
+    // if they are same
+    if (p1.first > p2.first)
+        return true;
+    return false;
+}
+void Impalgos()
+{
+    // to sort an array in ascending order (Default)
+    int a[] = {22, 120, 43, 76, 34};
+    int n = sizeof(a) / sizeof(a[0]);
+    sort(a, a + n);
+
+    // to sort an array in descending order
+    sort(a, a + n, greater<int>());
+
+    // to sort a particular portion in an array (elements at indices 2 to 3)
+    sort(a + 2, a + 4);
+
+    // to sort a vector (make sure to add elements to the vector before sorting)
+    vector<int> b = {5, 2, 9, 1, 5, 6}; // Example values
+    sort(b.begin(), b.end());
+
+    // to sort in its own fashion (pairs)
+    pair<int, int> c[] = {{1, 2}, {2, 1}, {4, 1}};
+    int m = size(c);
+    // sort it according to 2nd element
+    // if second element is same, then sort it according to first element in descending
+    // {4, 1}, {2, 1}, {1, 2}
+    sort(c, c + m, comp);
+    for (auto i : c)
+    {
+        cout << i.first << " " << i.second << endl;
+    }
+
+    int num = 7;
+    cout << __builtin_popcount(num) << endl; // 3 => 3 bits of 1, shows the number of set bits
+
+    long long num2 = 1657865778687;
+    cout << __builtin_popcountll(num2) << endl; // 16
+
+    // permutation with func
+    string s = "bbac";
+    int cpp = 0;
+    sort(s.begin(), s.end());
+    string cusper = s;
+    do
+    {
+        cout << cpp << ":" << s << endl;
+        cpp++;
+    } while (next_permutation(s.begin(), s.end()));
+
+    cout << "Factorisk of 10: " << factorialf(10) << endl
+         << "Count of 'Praveen': " << strlenp("praveen") << endl;
+    cout << cpp << " " << "Permutation of {" << cusper << "}: " << permutationf(cusper);
+    // permutation without func
+
+    cout << endl;
+}
+
 int main()
 {
     // pair__();
@@ -508,7 +746,14 @@ int main()
     // stack__(); // FILO, all operations are in big o (n), all happens in constant time
     // queue__(); // FIFO, SImilar to Stack, size, swap, empty same as stack, big o (n) all happens in constant time
     // priority_queue__(); // inside tree ds is maintained , t is a heap based one, no direct way to access other elements, top elements can be accessed easily, size, swap and empty are same
-    set__(); // sorted and unique order !!, tree ds is used
+    // set__(); // sorted and unique order !!, tree ds is used
+    // multiset__(); // sorted but not unique !!, tree ds is used
+    // unorderedset__(); // unique but not sorted !!, tree ds is used
     // binSearch();
+    // map__();
+
+    // container and iterators are finished !!
+    // Important algorithms
+    Impalgos();
     return 0;
 }
