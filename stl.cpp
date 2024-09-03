@@ -309,6 +309,7 @@ void queue__()
     cout << qu.front() << endl; // 10
     qu.pop();
     cout << qu.front() << endl; // 20
+    // while (!myQueue.empty()) { display front and then pop }
 }
 void disp_prio_que(priority_queue<int> pq)
 {
